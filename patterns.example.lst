@@ -8,3 +8,4 @@ R /var/www/html
 - **/vendor/
 - **/typo3temp/
 - **/composer-cache/
+- **/.git/
