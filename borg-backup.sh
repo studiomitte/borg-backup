@@ -13,13 +13,13 @@ export BORG_RESTORE_MOUNT=${ENV_BORG_RESTORE_MOUNT}
 LOG=${ENV_BORG_LOG_DIRECTORY}${ENV_BORG_LOG_FILE}
 
 ##
-## Ausgabe in Logdatei schreiben
+## write output to log file
 ##
 
 exec > >(tee -i ${LOG})
 exec 2>&1
 
-# first try to unmount if existting
+# first try to unmount repository if existting
 if borg umount ${BORG_RESTORE_MOUNT}; then
     echo "Restore folder unmounted"
 else
@@ -35,6 +35,7 @@ info "Starting backup"
 
 # Backup the most important directories into an archive named after
 # the machine this script is currently running on:
+# check the file patterns.lst for including and excluding stuff
 
 borg create                         \
     --verbose                       \

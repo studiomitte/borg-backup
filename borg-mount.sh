@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ###############################
-# script mounts borg repos 
+# script mounts borg repo from .env
 # to defined mount directory
 # DO NOT FORGET TO UNMOUNT!!
 # borg unmount MOUNT_DIR
@@ -15,7 +15,6 @@ set +o allexport
 
 # Setting this, so the repo does not need to be given on the commandline:
 export BORG_REPO=${ENV_BORG_REPO}
-# See the section "Passphrase notes" for more infos.
 export BORG_PASSPHRASE=${ENV_BORG_PASSPHRASE}
 export BORG_RESTORE_MOUNT=${ENV_BORG_RESTORE_MOUNT}
 

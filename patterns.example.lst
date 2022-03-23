@@ -1,0 +1,10 @@
+R /etc   
+R /root
+R /var/www/html
+- **/log/
+- **/logs/
+- **/cache/
+- **/node_modules/
+- **/vendor/
+- **/typo3temp/
+- **/composer-cache/
