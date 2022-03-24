@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+// get current directory
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # load values from .env
 set -o allexport
-eval $(cat '.env' | sed -e '/^#/d;/^\s*$/d' -e 's/\(\w*\)[ \t]*=[ \t]*\(.*\)/\1=\2/' -e "s/=['\"]\(.*\)['\"]/=\1/g" -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g")
+eval $(cat ${DIR}'/.env' | sed -e '/^#/d;/^\s*$/d' -e 's/\(\w*\)[ \t]*=[ \t]*\(.*\)/\1=\2/' -e "s/=['\"]\(.*\)['\"]/=\1/g" -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g")
 set +o allexport
 
 # Setting this, so the repo does not need to be given on the commandline:
@@ -48,7 +51,7 @@ borg create                         \
     --exclude '/home/*/.cache/*'    \
     --exclude '/var/tmp/*'          \
     ::'{hostname}-{now}'            \
-    --patterns-from './patterns.lst'
+    --patterns-from ${DIR}'/patterns.lst'
 
 backup_exit=$?
 
