@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-// get current directory
+# get current directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # load values from .env
