@@ -5,7 +5,10 @@ Features:
 * Backup script for creating / updating backups as well as pruning
 * Automated mounting of repository to a local folder for easy browsing and restoring from the archive
 
-Tested with Hetzner Storage Box as remote repository via SSH.
+## Test environment 
+* Ubuntu 18.04 / 20.04
+* BorgBackup 1.2 
+* Remote repository: Hetzner Storage Box (ssh / rsync)
 
 ## Setup 
 * clone this repo
