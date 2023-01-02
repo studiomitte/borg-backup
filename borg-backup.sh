@@ -15,6 +15,8 @@ export BORG_PASSPHRASE=${ENV_BORG_PASSPHRASE}
 export BORG_RESTORE_MOUNT=${ENV_BORG_RESTORE_MOUNT}
 LOG=${ENV_BORG_LOG_DIRECTORY}${ENV_BORG_LOG_FILE}
 
+
+
 ##
 ## write output to log file
 ##
@@ -41,7 +43,7 @@ info "Starting backup"
 # check the file patterns.lst for including and excluding stuff
 
 borg create                         \
-    --verbose                       \
+    --warning                       \
     --filter AME                    \
     --list                          \
     --stats                         \
@@ -83,3 +85,29 @@ elif [ ${global_exit} -eq 1 ]; then
 else
     info "Backup, Prune, and/or Compact finished with errors"
 fi
+
+
+################################################
+# email result to configured email address (see .env)
+################################################
+
+# date and time
+ts_now="$(date +"%d.%m.%Y - %T")"
+
+# mail address to send backup report to
+email_address=${ENV_BORG_EMAIL}
+
+# mail message, log file content will be appended
+email_message="Borg Backup Report: $HOSTNAME / $ts_now" ${email_address}<${LOG}
+
+# 0: info / verbose 
+# 1: warning (default)
+# >1: error
+email_level=${ENV_BORG_EMAIL_LEVEL:-1}
+
+# send mail if global_exit equals to configured level or higher
+if [ ${global_exit} -ge ${email_level} ]; then
+    mail -s "${email_message}" 
+    info "Mail sent successfully to ${email_address}"
+fi
+
