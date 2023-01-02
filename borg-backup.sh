@@ -89,25 +89,31 @@ fi
 
 ################################################
 # email result to configured email address (see .env)
+# using "mail" command (postfix, sendmail..)
 ################################################
 
 # date and time
 ts_now="$(date +"%d.%m.%Y - %T")"
 
+# 0: disable email 
+# 1: enable email (default)
+email_enabled=${ENV_BORG_EMAIL_ENABLED:-1}
+
 # mail address to send backup report to
-email_address=${ENV_BORG_EMAIL}
+email_address=${ENV_BORG_EMAIL_ADDRESS}
 
-# mail message, log file content will be appended
-email_message="Borg Backup Report: $HOSTNAME / $ts_now" ${email_address}<${LOG}
+#mail message, log file content will be appended
+email_message="Borg Backup Report: $HOSTNAME / $ts_now"
 
-# 0: info / verbose 
+# send level of information based on borg return code
+# 0: info / verbose
 # 1: warning (default)
 # >1: error
 email_level=${ENV_BORG_EMAIL_LEVEL:-1}
 
 # send mail if global_exit equals to configured level or higher
-if [ ${global_exit} -ge ${email_level} ]; then
-    mail -s "${email_message}" 
+if [[ ${email_enabled} -gt 0 && ${global_exit} -ge ${email_level} ]]; then
+    mail -s "${email_message}" ${email_address}<${LOG}
     info "Mail sent successfully to ${email_address}"
 fi
 
