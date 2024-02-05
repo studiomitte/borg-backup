@@ -1,6 +1,7 @@
 R /etc   
 R /root
 R /var/www/html
+R /var/lib
 - **/log/
 - **/logs/
 - **/cache/
