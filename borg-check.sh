@@ -14,9 +14,11 @@ function usage {
     if [[ -n $1 ]]; then
         echo "$1"
     fi
-    echo -e "usage $0 [--rep] []"
+    echo -e "usage $0 [-q] [--rep|-a|-r] "
     echo "  -q      Quiet. Don't show progress."
-    echo "  --rep   Will try to repair. This can damage your backup. "
+    echo "  --rep   Will try to repair. This can damage your backup."
+    echo "  -a      Archives only."
+    echo "  -r      Repositories only."
 }
 
 while [[ $# -ne 0 ]]; do
