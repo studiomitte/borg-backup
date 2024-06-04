@@ -113,7 +113,8 @@ email_level=${ENV_BORG_EMAIL_LEVEL:-1}
 
 # send mail if global_exit equals to configured level or higher
 if [[ ${email_enabled} -gt 0 && ${global_exit} -ge ${email_level} ]]; then
-    mail -s "${email_message}" ${email_address}<${LOG}
+    # send logfile as attachement - parameter "-A" works on debian / ubuntu
+    echo "${email_message}" | mail -s "${email_message}" -A ${LOG} ${email_address}
     info "Mail sent successfully to ${email_address}"
 fi
 
