@@ -42,7 +42,7 @@ info "Starting backup"
 # the machine this script is currently running on:
 # check the file patterns.lst for including and excluding stuff
 
-borg create                         \
+borg --lock-wait 21600 create       \
     --warning                       \
     --filter AME                    \
     --list                          \
@@ -64,7 +64,7 @@ info "Pruning repository"
 # limit prune's operation to this machine's archives and not apply to
 # other machines' archives also:
 
-borg prune                          \
+borg --lock-wait 21600 prune        \
     --list                          \
     --prefix '{hostname}-'          \
     --show-rc                       \
