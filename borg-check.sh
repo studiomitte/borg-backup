@@ -9,13 +9,15 @@ REPAIR=
 PROGRESS="-p"
 ARCHIVESONLY=
 REPOSITORYONLY=
+VERBOSE=""
 
 function usage {
     if [[ -n $1 ]]; then
         echo "$1"
     fi
-    echo -e "usage $0 [-q] [--rep|-a|-r] "
+    echo -e "usage $0 [-q][-v] [--rep|-a|-r] "
     echo "  -q      Quiet. Don't show progress."
+    echo "  -v      Verbose."
     echo "  --rep   Will try to repair. This can damage your backup."
     echo "  -a      Archives only."
     echo "  -r      Repositories only."
@@ -27,6 +29,7 @@ while [[ $# -ne 0 ]]; do
         -a) ARCHIVESONLY="--archives-only";;
         -r) REPOSITORYONLY="--repository-only";;
         -q) PROGRESS="";;
+        -v) VERBOSE="--verbose";;
         -h) usage; exit 1;;
     esac    
     shift
@@ -50,6 +53,7 @@ echo "----------------------------"
 echo
 
 borg check    \
+    $VERBOSE        \
     $PROGRESS       \
     $ARCHIVESONLY   \
     $REPOSITORYONLY \

@@ -41,4 +41,4 @@ Features:
 * now you can browse all archives and restore files via bash
 * be sure to unmount the restore folder with `borg umount MY_RESTORE_FOLDER`
 
-For questions please contact ep@studiomitte.com
+Original project found here https://github.com/studiomitte/borg-backup

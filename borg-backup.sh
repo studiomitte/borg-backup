@@ -60,13 +60,12 @@ backup_exit=$?
 info "Pruning repository"
 
 # Use the `prune` subcommand to maintain 7 daily, 4 weekly and 6 monthly
-# archives of THIS machine. The '{hostname}-' prefix is very important to
-# limit prune's operation to this machine's archives and not apply to
-# other machines' archives also:
+# archives of THIS machine. The '{hostname}-*' pattern limits prune's
+# operation to this machine's archives and not apply to other machines' archives:
 
 borg --lock-wait 21600 prune        \
     --list                          \
-    --prefix '{hostname}-'          \
+    --glob-archives '{hostname}-*'  \
     --show-rc                       \
     --keep-daily    14              \
     --keep-weekly   4               \
@@ -114,7 +113,7 @@ email_level=${ENV_BORG_EMAIL_LEVEL:-1}
 # send mail if global_exit equals to configured level or higher
 if [[ ${email_enabled} -gt 0 && ${global_exit} -ge ${email_level} ]]; then
     # send logfile as attachement - parameter "-A" works on debian / ubuntu
-    echo "${email_message}" | mail -s "${email_message}" -A ${LOG} ${email_address}
+    mail -s "${email_message}" ${email_address}<${LOG}
     info "Mail sent successfully to ${email_address}"
 fi
 
