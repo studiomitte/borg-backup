@@ -6,9 +6,9 @@ Features:
 * Automated mounting of repository to a local folder for easy browsing and restoring from the archive
 
 ## Test environment 
-* Ubuntu 18.04 / 20.04
+* Ubuntu 20.04 / 24.04 / 26.04
 * BorgBackup 1.2 
-* Remote repository: Hetzner Storage Box (ssh / rsync)
+* Remote repository: Wasabi Cloud S3 (rclone)
 
 ## Setup 
 * clone this repo
@@ -29,6 +29,11 @@ Features:
 0 3 * * * /MY_PATH_TO/borg-backup/borg-backup.sh > /dev/null 2>&1
 ```
 * check logfile (see .env) for results or errors
+
+### Syncing to Wasabi
+* run `wasabisync.sh` on the machine holding the local Borg repository
+* set `ENV_SYNC_REPOSITORY_PATH` to an existing local repository directory and `ENV_SYNC_TARGET_PATH` to the rclone destination, e.g. `wasabi:target_bucket_name`
+* the script rejects missing or blank source/destination settings and nonexistent source directories before syncing; destination access is checked by rclone during the sync
 
 ### Restoring Backups
 * configure restore folder in `.env`, e.g. `/mnt/borg`
